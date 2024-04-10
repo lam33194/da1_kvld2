@@ -1,8 +1,8 @@
 <?php
     function load_all_orders() {
-        $sql = "SELECT * , sum(so_luong) as 'sum_sp'
-        From donhang dh inner join donhang_items dhi 
-        on dh.id = dhi.id_donhang
+        $sql = "SELECT *, dh.id as iddh From donhang dh
+        inner join donhang_items dhi on dh.id = dhi.id_donhang
+        inner join taikhoan tk on tk.id = dh.user_id
         group by id_donhang
         order by id_donhang desc";
         return pdo_query($sql);
@@ -59,6 +59,11 @@
     }
     function success_order($id_dh){
         $sql = "UPDATE donhang SET status_delivery = 2, status_payment = 1 where id = $id_dh";
+        pdo_execute($sql);
+        return true;
+    }
+    function success_order_admin($id_dh){
+        $sql = "UPDATE donhang SET status_delivery = 3 where id = $id_dh";
         pdo_execute($sql);
         return true;
     }

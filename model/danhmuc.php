@@ -1,7 +1,7 @@
 <?php
 function load_all_dm_admin() {
     $sql = 'SELECT dm.id, dm.ten_danh_muc, count(sp.id) as "soluong_mathang" FROM danhmuc dm 
-    inner join sanpham sp on sp.iddm = dm.id 
+    left join sanpham sp on sp.iddm = dm.id 
     GROUP BY dm.id
     order by dm.id desc';
     return pdo_query($sql);
@@ -38,5 +38,5 @@ function xoa_danhmuc($id){
 }
 function validate_unique_dm($tendm) {
     $sql = "SELECT * FROM danhmuc where ten_danh_muc = '$tendm'";
-    return pdo_query_one($sql);
+    return pdo_query($sql);
 }

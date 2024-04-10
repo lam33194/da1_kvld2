@@ -1,6 +1,8 @@
 <?php 
 function load_all_sp_admin() {
-    $sql = "SELECT * from sanpham order by id desc";
+    $sql = "SELECT sp.id as idsp, anh_sp, ten_sp, gia_sp, sold, ten_danh_muc
+    from sanpham sp inner join danhmuc dm on dm.id = sp.iddm
+    order by idsp desc";
     return pdo_query($sql);
 }
 function load_all_sp() {
